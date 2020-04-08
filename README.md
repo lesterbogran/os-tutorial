@@ -1,94 +1,94 @@
 os-tutorial
 ===========
 
-How to create an OS from scratch!
+¡Cómo crear un SO desde cero!
 
-I have always wanted to learn how to make an OS from scratch. In college I was taught
-how to implement advanced features (pagination, semaphores, memory management, etc)
-but:
+Siempre he querido aprender a hacer un SO desde cero. En la universidad me enseñaron
+Cómo implementar funciones avanzadas (paginación, semáforos, gestión de memoria, etc.)
+pero:
 
-- I never got to start from my own boot sector
-- College is hard so I don't remember most of it.
-- I'm fed up with people who think that reading an already existing kernel, even if small, is 
-a good idea to learn operating systems.
+- Nunca pude comenzar desde mi propio sector de arranque
+- La universidad es difícil, así que no recuerdo la mayor parte.
+- Estoy harto de personas que piensan que leer un núcleo ya existente, aunque sea pequeño, es
+Una buena idea para aprender sistemas operativos.
 
-Inspired by [this document](http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf)
-and the [OSDev wiki](http://wiki.osdev.org/), I'll try to make short step-by-step READMEs and
-code samples for anybody to follow. Honestly, this tutorial is basically the first document but
-split into smaller pieces and without the theory.
+Inspirado en [este documento] (http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf)
+y el [wiki de OSDev] (http://wiki.osdev.org/), intentaré hacer READMEs cortos y paso a paso y
+ejemplos de código para que cualquiera los siga. Honestamente, este tutorial es básicamente el primer documento pero
+dividido en piezas más pequeñas y sin la teoría.
 
-Updated: more sources: [the little book about OS development](https://littleosbook.github.io),
-[JamesM's kernel development tutorials](https://web.archive.org/web/20160412174753/http://www.jamesmolloy.co.uk/tutorial_html/index.html)
+Actualizado: más fuentes: [el pequeño libro sobre el desarrollo del sistema operativo] (https://littleosbook.github.io),
+[Tutoriales de desarrollo del kernel de JamesM] (https://web.archive.org/web/20160412174753/http://www.jamesmolloy.co.uk/tutorial_html/index.html)
 
 
-Features
+Caracteristicas
 --------
 
-- This course is a code tutorial aimed at people who are comfortable with low level computing. For example,
-programmers who have curiosity on how an OS works but don't have the time or willpower to start reading the Linux kernel
-top to bottom.
-- There is little theory. Yes, this is a feature. Google is your theory lecturer. Once you pass college, 
-excessive theory is worse than no theory because it makes things seem more difficult than they really are.
-- The lessons are tiny and may take 5-15 minutes to complete. Trust me and trust yourself. You can do it!
+- Este curso es un tutorial de código dirigido a personas que se sienten cómodas con la informática de bajo nivel. Por ejemplo,
+programadores que tienen curiosidad sobre cómo funciona un sistema operativo pero no tienen el tiempo o la fuerza de voluntad para comenzar a leer el kernel de Linux
+de arriba hacia abajo.
+- Hay poca teoría. Sí, esta es una característica. Google es tu profesor de teoría. Una vez que pasas la universidad,
+La teoría excesiva es peor que ninguna teoría porque hace que las cosas parezcan más difíciles de lo que realmente son.
+- Las lecciones son pequeñas y pueden tardar entre 5 y 15 minutos en completarse. Confía en mí y confía en ti mismo. ¡Puedes hacerlo!
 
 
-How to use this tutorial
+Cómo usar este tutorial
 ------------------------
 
-1. Start with the first folder and go down in order. They build on previous code, so if 
-you jump right to folder 05 and don't know why there is a `mov ah, 0x0e`, it's because you missed lecture 02.
-Really, just go in order. You can always skip stuff you already know.
+1. Comience con la primera carpeta y baje en orden. Se basan en el código anterior, así que si
+saltas directamente a la carpeta 05 y no sabes por qué hay un `mov ah, 0x0e`, es porque te perdiste la clase 02.
+Realmente, solo ve en orden. Siempre puedes saltear cosas que ya sabes.
 
-2. Open the README and read the first line, which details the concepts you should be familiar with
-before reading the code. Google concepts you are not familiar with. The second line states the goals for each lesson. 
-Read them, because they explain why we do what we do. The "why" is as important as the "how".
- 
-3. Read the rest of the README. It is **very concise**.
+2. Abra el archivo README y lea la primera línea, que detalla los conceptos con los que debe estar familiarizado
+antes de leer el código. Conceptos de Google con los que no estás familiarizado. La segunda línea establece los objetivos para cada lección.
+Léelos, porque explican por qué hacemos lo que hacemos. El "por qué" es tan importante como el "cómo".
+ 
+3. Lea el resto del archivo README. Es ** muy conciso **.
 
-4. (Optional) Try to write the code files by yourself after reading the README.
+4. (Opcional) Intente escribir los archivos de código usted mismo después de leer el archivo README.
 
-5. Look at the code examples. They are extremely well commented.
+5. Mira los ejemplos de código. Están extremadamente bien comentados.
 
-6. (Optional) Experiment with them and try to break things. The only way to make sure you understood something is
-trying to break it or replicate it with different commands.
-
-
-TL;DR: First read the README on each folder, then the code files. If you're brave, try to code them yourself.
+6. (Opcional) Experimente con ellos e intente romper cosas. La única forma de asegurarse de que entendió algo es
+tratando de romperlo o replicarlo con diferentes comandos.
 
 
-Strategy
+TL; DR: Primero lea el archivo README en cada carpeta, luego los archivos de código. Si eres valiente, intenta codificarlos tú mismo.
+
+
+Estrategia
 --------
 
-We will want to do many things with our OS:
+Queremos hacer muchas cosas con nuestro sistema operativo:
 
-- Boot from scratch, without GRUB - DONE!
-- Enter 32-bit mode - DONE
-- Jump from Assembly to C - DONE!
-- Interrupt handling - DONE!
-- Screen output and keyboard input - DONE!
-- A tiny, basic `libc` which grows to suit our needs - DONE!
-- Memory management
-- Write a filesystem to store files
-- Create a very simple shell
-- User mode
-- Maybe we will write a simple text editor
-- Multiple processes and scheduling
+- Arranque desde cero, sin GRUB - ¡HECHO!
+- Ingrese al modo de 32 bits - HECHO
+- Salta de la Asamblea a C - ¡HECHO!
+- Manejo de interrupciones - ¡HECHO!
+- Salida de pantalla y entrada de teclado - ¡HECHO!
+- Un pequeño 'libc' básico que crece para satisfacer nuestras necesidades - ¡HECHO!
+- Gestión de la memoria
+- Escribir un sistema de archivos para almacenar archivos
+- Crea un caparazón muy simple
+- Modo de usuario
+- Tal vez escribiremos un editor de texto simple
+- Múltiples procesos y programación
 
-Probably we will go through them in that order, however it's soon to tell.
+Probablemente los revisaremos en ese orden, sin embargo, es pronto para contarlo.
 
-If we feel brave enough:
+Si nos sentimos lo suficientemente valientes:
 
-- A BASIC interpreter, like in the 70s!
-- A GUI
-- Networking
+- ¡Un intérprete BÁSICO, como en los años 70!
+- Una GUI
+- Redes
 
 
 
-Contributing
+Contribuyendo
 ------------
 
-This is a personal learning project, and even though it hasn't been updated for a long time, I still have hopes to get into it at some point.
+Este es un proyecto de aprendizaje personal, y aunque no se ha actualizado durante mucho tiempo, todavía tengo la esperanza de entrar en él en algún momento.
 
-I'm thankful to all those who have pointed out bugs and submitted pull requests. I will need some time to review everything and I cannot guarantee that at this moment.
+Estoy agradecido a todos aquellos que han señalado errores y enviado solicitudes de extracción. Necesitaré algo de tiempo para revisar todo y no puedo garantizarlo en este momento.
 
-Please feel free to fork this repo. If many of you are interested in continuing the project, let me know and I'll link the "main fork" from here.
+Por favor, siéntase libre de bifurcar este repositorio. Si muchos de ustedes están interesados ​​en continuar el proyecto, háganmelo saber y vincularé la "bifurcación principal" desde aquí.
